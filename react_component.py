@@ -94,6 +94,12 @@ class ReactCreateComponentCommand(sublime_plugin.WindowCommand):
         return self._is_valid_args(paths)
 
     def run(self, paths):
+        """Base run function, which gets paths and shows component type
+        selector.
+
+        :param paths: paths list to folder where component to be placed
+        :type paths: list
+        """
         paths = [] if paths is None else paths
         self.window.run_command('hide_panel')
         if self._is_valid_args(paths):
@@ -103,18 +109,33 @@ class ReactCreateComponentCommand(sublime_plugin.WindowCommand):
                 self._component_type_on_done)
 
     def _component_type_on_done(self, index):
+        """Callback for the component type Quick Panel selector.
+
+        :param index: index of the component type panel selection
+        :type index: int
+        """
         self._content = self._safe_get_selection(COMPONENT_TYPES, index)
         self.window.show_quick_panel(
             list(STYLE_TYPES.keys()),
             self._style_type_on_done)
 
     def _style_type_on_done(self, index):
+        """Callback for the style type Quick Panel selector.
+
+        :param index: index of the style type panel selection
+        :type index: int
+        """
         self._style = self._safe_get_selection(STYLE_TYPES, index)
         self.window.show_quick_panel(
             list(CSS_MODULES_TYPES.keys()),
             self._css_modules_type_on_done)
 
     def _css_modules_type_on_done(self, index):
+        """Callback for the css-modules Quick Panel selector.
+
+        :param index: index of the css-modules panel selection
+        :type index: int
+        """
         self._css_modules = self._safe_get_selection(CSS_MODULES_TYPES, index)
         self.window.show_input_panel(
             'Component Name:', '',
@@ -122,10 +143,16 @@ class ReactCreateComponentCommand(sublime_plugin.WindowCommand):
             None, None)
 
     def _component_name_on_done(self, name):
+        """Callback for the component name Input Panel value.
+
+        :param name: name of the component to be created
+        :type name: string
+        """
         if not name or ' ' in name:
             sublime.error_message(
                 'Unable to create component: invalid name.')
             return
+
         new_dir = os.path.join(self._path, name)
         if not os.path.exists(new_dir):
             os.makedirs(new_dir)
@@ -145,6 +172,17 @@ class ReactCreateComponentCommand(sublime_plugin.WindowCommand):
                 'Unable to create component: "%s" already exists.' % name)
 
     def _safe_get_selection(self, od, index):
+        """Checks if the selection from a Quick Panel is valid and
+        returns the value.
+
+        :param od: the ordered dictionary to perform lookup on
+        :type od: OrderedDict
+        :param index: index of the panel selection
+        :type index: int
+        :returns: the value associated with the key index in `od`
+        :rtype: {string}
+        :raises: Exception
+        """
         if index == -1:
             message = 'Unable to create component: no option selected.'
             sublime.error_message(message)

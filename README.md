@@ -51,7 +51,7 @@ folder and select Create React Component. It will:
 ## More Info and Bug Tracking
 
 You can get the latest code, make suggestions or report bugs at
-[https://github.com/acsands13/](https://github.com/acsands13/).
+[https://github.com/acsands13/sublime-react-create-component/issues](https://github.com/acsands13/sublime-react-create-component/issues).
 
 Based off
 [Python Create Package](https://github.com/curaloucura/SublimePythonPackage)

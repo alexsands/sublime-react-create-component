@@ -160,7 +160,7 @@ class ReactCreateComponentCommand(sublime_plugin.WindowCommand):
             stylesheet_name = 'styles%s%s' % (self._css_modules, self._style)
             style_import = 'import \'./%s\';' % stylesheet_name
             if self._css_modules:
-                style_import = 'import styles from \'./%s\'' % stylesheet_name
+                style_import = 'import styles from \'./%s\';' % stylesheet_name
             open(os.path.join(new_dir, stylesheet_name), 'w').close()
             open(os.path.join(new_dir, index_name), 'w').write(
                 self._content % {
